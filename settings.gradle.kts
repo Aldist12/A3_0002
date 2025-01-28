@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MyStokApp"
+rootProject.name = "MystokApp"
 include(":app")
  
