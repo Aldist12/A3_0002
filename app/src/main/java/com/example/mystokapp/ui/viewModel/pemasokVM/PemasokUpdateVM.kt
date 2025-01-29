@@ -19,7 +19,9 @@ data class UpdatePemasokEvent(
 sealed class UpdatePemasokUiState {
     object Idle : UpdatePemasokUiState()
     object Loading : UpdatePemasokUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val pemasok: Pemasok) : UpdatePemasokUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val pemasok: Pemasok) :
+        UpdatePemasokUiState()
+
     data class Error(val message: String) : UpdatePemasokUiState()
 }
 
@@ -46,7 +48,8 @@ class PemasokUpdateVM(
                 )
                 _uiState.value = UpdatePemasokUiState.Success(pemasok)
             } catch (e: Exception) {
-                _uiState.value = UpdatePemasokUiState.Error("Failed to load supplier data: ${e.message}")
+                _uiState.value =
+                    UpdatePemasokUiState.Error("Failed to load supplier data: ${e.message}")
             }
         }
     }
@@ -75,7 +78,8 @@ class PemasokUpdateVM(
                 pemasokRepository.updatePemasok(formData.idPemasok, pemasok)
                 _uiState.value = UpdatePemasokUiState.Success(pemasok)
             } catch (e: Exception) {
-                _uiState.value = UpdatePemasokUiState.Error("Failed to update supplier: ${e.message}")
+                _uiState.value =
+                    UpdatePemasokUiState.Error("Failed to update supplier: ${e.message}")
             }
         }
     }

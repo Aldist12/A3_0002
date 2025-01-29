@@ -68,7 +68,7 @@ fun DetailScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {onEditClick(idProduk)},
+                onClick = { onEditClick(idProduk) },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
             ) {
@@ -112,6 +112,7 @@ fun DetailScreen(
                     }
                 }
             }
+
             is DetailProdukUiState.Error -> OnError(retryAction = { viewModel.getProdukById(idProduk) })
         }
     }

@@ -1,6 +1,5 @@
 package com.example.mystokapp.ui.view.pemasok
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,14 +16,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -38,8 +34,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,7 +43,6 @@ import com.example.mystokapp.ui.viewModel.PenyediaViewModel
 import com.example.mystokapp.ui.viewModel.pemasokVM.HomeUiState
 import com.example.mystokapp.ui.viewModel.pemasokVM.PemasokHomeVM
 import kotlinx.serialization.InternalSerializationApi
-import com.example.mystokapp.R
 
 
 object DestinasiPemasokHome : DestinasiNavigasi {
@@ -152,7 +145,12 @@ fun BottomNavigationBar(
 ) {
     NavigationBar(containerColor = Color(0xFFF5F6FF)) {
         NavigationBarItem(
-            icon = { Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Products") },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Products"
+                )
+            },
             label = { Text("Produk") },
             selected = selectedTab == 0,
             onClick = {
@@ -161,7 +159,12 @@ fun BottomNavigationBar(
             }
         )
         NavigationBarItem(
-            icon = { Icon(imageVector = Icons.Default.Favorite, contentDescription = "Categories") },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Categories"
+                )
+            },
             label = { Text("Kategori") },
             selected = selectedTab == 1,
             onClick = {
@@ -170,7 +173,12 @@ fun BottomNavigationBar(
             }
         )
         NavigationBarItem(
-            icon = { Icon(imageVector = Icons.Default.ExitToApp, contentDescription = "Suppliers") },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.ExitToApp,
+                    contentDescription = "Suppliers"
+                )
+            },
             label = { Text("Pemasok") },
             selected = selectedTab == 2,
             onClick = { onTabSelected(2) }
@@ -220,6 +228,7 @@ fun HomeStatus(
                 )
             }
         }
+
         is HomeUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
     }
 }

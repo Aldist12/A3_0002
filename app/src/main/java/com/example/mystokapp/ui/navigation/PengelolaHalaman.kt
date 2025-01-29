@@ -97,7 +97,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                     navController.navigate("${DestinasiUpdateProduk.route}/$idProduk")
                 },
 
-                onKategoriClick = {navController.navigate(DestinasiKategoriHome.route)}
+                onKategoriClick = { navController.navigate(DestinasiKategoriHome.route) }
             )
         }
 
@@ -265,7 +265,8 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             DetailKategoriScreen(
                 idKategori = idKategori,
                 onNavigateBack = { navController.popBackStack() },
-                onEditClick = {navController.navigate("${DestinasiUpdateKategori.route}/$idKategori")
+                onEditClick = {
+                    navController.navigate("${DestinasiUpdateKategori.route}/$idKategori")
                 }
             )
         }

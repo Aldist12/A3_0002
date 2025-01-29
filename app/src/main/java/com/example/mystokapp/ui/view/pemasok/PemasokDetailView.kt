@@ -17,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -65,7 +64,7 @@ fun DetailPemasokScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {onEditClick(idPemasok)},
+                onClick = { onEditClick(idPemasok) },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
             ) {
@@ -90,7 +89,12 @@ fun DetailPemasokScreen(
                     DetailPemasokCard(pemasok = state.pemasok)
                 }
             }
-            is DetailPemasokUiState.Error -> OnError(retryAction = { viewModel.getPemasokById(idPemasok) })
+
+            is DetailPemasokUiState.Error -> OnError(retryAction = {
+                viewModel.getPemasokById(
+                    idPemasok
+                )
+            })
         }
     }
 }

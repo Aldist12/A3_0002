@@ -12,7 +12,9 @@ import kotlinx.serialization.InternalSerializationApi
 
 sealed class DetailPemasokUiState {
     object Loading : DetailPemasokUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val pemasok: Pemasok) : DetailPemasokUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val pemasok: Pemasok) :
+        DetailPemasokUiState()
+
     object Error : DetailPemasokUiState()
 }
 

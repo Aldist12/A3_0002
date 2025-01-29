@@ -73,9 +73,11 @@ fun UpdateScreenPemasok(
                         }
                     )
                 }
+
                 is UpdatePemasokUiState.Error -> {
                     Text("Error: ${(uiState as UpdatePemasokUiState.Error).message}")
                 }
+
                 else -> {}
             }
         }
