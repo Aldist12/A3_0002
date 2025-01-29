@@ -1,26 +1,13 @@
 package com.example.mystokapp.ui.view.merk
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.model.Merk
@@ -30,7 +17,6 @@ import com.example.mystokapp.ui.viewModel.PenyediaViewModel
 import com.example.mystokapp.ui.viewModel.merkVM.DetailMerkUiState
 import com.example.mystokapp.ui.viewModel.merkVM.MerkDetailVM
 import kotlinx.serialization.InternalSerializationApi
-
 
 object DestinasiMerkDetail : DestinasiNavigasi {
     override val route = "detail merk"
@@ -53,7 +39,7 @@ fun DetailMerkScreen(
     }
 
     Scaffold(
-        modifier = Modifier,
+        modifier = modifier,
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiMerkDetail.titleRes,
@@ -65,12 +51,14 @@ fun DetailMerkScreen(
             FloatingActionButton(
                 onClick = { onEditClick(idMerk) },
                 shape = MaterialTheme.shapes.medium,
+                containerColor = Color(0xFF6C5CE7), // **Tombol tetap ungu**
+                contentColor = Color.White,
                 modifier = Modifier.padding(18.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit Merk",
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = Color.White
                 )
             }
         },
@@ -81,6 +69,7 @@ fun DetailMerkScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
+                        .background(Color.LightGray) // **Menggunakan warna abu-abu terang agar konsisten**
                         .padding(innerPadding)
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -89,7 +78,13 @@ fun DetailMerkScreen(
                 }
             }
 
-            is DetailMerkUiState.Error -> OnError(retryAction = { viewModel.getMerkById(idMerk) })
+            is DetailMerkUiState.Error -> {
+                Text(
+                    text = "Error: ${(state as DetailMerkUiState.Error)}",
+                    color = Color.Red, // **Menampilkan error dalam warna merah**
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }
@@ -104,6 +99,9 @@ fun DetailMerkCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFD0C4FC) // **Warna card tetap ungu muda**
+        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
         )
@@ -116,14 +114,19 @@ fun DetailMerkCard(
         ) {
             // Header section with merk name
             Text(
-                text = merk.namaMerk, style = MaterialTheme.typography.headlineMedium.copy(
-                    color = MaterialTheme.colorScheme.primary
+                text = merk.namaMerk,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    color = Color(0xFF2C2C2C), // **Warna lebih gelap agar mudah dibaca**
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
             )
 
             // Description section
             Text(
-                text = merk.deskripsiMerk, style = MaterialTheme.typography.bodyLarge
+                text = merk.deskripsiMerk,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF3C3C3C) // **Teks lebih gelap untuk keterbacaan lebih baik**
+                )
             )
 
             // Divider
@@ -131,12 +134,15 @@ fun DetailMerkCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                color = MaterialTheme.colorScheme.outlineVariant
+                color = Color.Gray
             )
 
             // Merk details
             Text(
-                text = "ID Merk: ${merk.idMerk}", style = MaterialTheme.typography.bodyLarge
+                text = "ID Merk: ${merk.idMerk}",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF3C3C3C) // **Teks lebih gelap untuk konsistensi**
+                )
             )
         }
     }

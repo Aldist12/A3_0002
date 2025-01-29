@@ -1,30 +1,14 @@
 package com.example.mystokapp.ui.view.produk
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.model.Produk
@@ -34,7 +18,6 @@ import com.example.mystokapp.ui.viewModel.PenyediaViewModel
 import com.example.mystokapp.ui.viewModel.produkVM.DetailProdukUiState
 import com.example.mystokapp.ui.viewModel.produkVM.ProdukDetailVM
 import kotlinx.serialization.InternalSerializationApi
-
 
 object DestinasiDetail : DestinasiNavigasi {
     override val route = "detail produk"
@@ -58,7 +41,7 @@ fun DetailScreen(
     }
 
     Scaffold(
-        modifier = Modifier,
+        modifier = modifier,
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiDetail.titleRes,
@@ -70,12 +53,14 @@ fun DetailScreen(
             FloatingActionButton(
                 onClick = { onEditClick(idProduk) },
                 shape = MaterialTheme.shapes.medium,
+                containerColor = Color(0xFF6C5CE7), // Warna ungu untuk konsistensi
+                contentColor = Color.White,
                 modifier = Modifier.padding(18.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit Produk",
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = Color.White
                 )
             }
         },
@@ -86,6 +71,7 @@ fun DetailScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
+                        .background(Color.LightGray) // Menggunakan warna abu-abu terang
                         .padding(innerPadding)
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -98,7 +84,8 @@ fun DetailScreen(
                             .fillMaxWidth()
                             .padding(vertical = 16.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
+                            containerColor = Color(0xFF6C5CE7), // Warna ungu untuk tombol
+                            contentColor = Color.White
                         ),
                         elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 4.dp
@@ -113,7 +100,13 @@ fun DetailScreen(
                 }
             }
 
-            is DetailProdukUiState.Error -> OnError(retryAction = { viewModel.getProdukById(idProduk) })
+            is DetailProdukUiState.Error -> {
+                Text(
+                    text = "Error: ${(state as DetailProdukUiState.Error)}",
+                    color = Color.Red, // Menampilkan error dalam warna merah
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }
@@ -129,6 +122,9 @@ fun DetailProdukCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFD0C4FC) // Warna ungu muda agar serasi dengan desain lainnya
+        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
         )
@@ -143,7 +139,8 @@ fun DetailProdukCard(
             Text(
                 text = produk.namaProduk,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    color = MaterialTheme.colorScheme.primary
+                    color = Color(0xFF2C2C2C), // Warna teks lebih gelap agar lebih jelas
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
             )
 
@@ -155,12 +152,14 @@ fun DetailProdukCard(
             ) {
                 Text(
                     text = "Rp. ${produk.harga}",
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = Color(0xFF3C3C3C) // Warna teks lebih gelap untuk keterbacaan lebih baik
+                    )
                 )
 
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        containerColor = Color(0xFFB5A8FF) // Warna stok agar selaras dengan tema
                     )
                 ) {
                     Text(
@@ -176,7 +175,7 @@ fun DetailProdukCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                color = MaterialTheme.colorScheme.outlineVariant
+                color = Color.Gray
             )
 
             // Product details
@@ -185,25 +184,33 @@ fun DetailProdukCard(
             ) {
                 Text(
                     text = "Deskripsi: ${produk.deskripsiProduk}",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = Color(0xFF3C3C3C)
+                    )
                 )
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    color = MaterialTheme.colorScheme.outlineVariant
+                    color = Color.Gray
                 )
                 Text(
                     text = "Kategori: ${produk.idKategori}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = Color(0xFF3C3C3C)
+                    )
                 )
                 Text(
                     text = "Pemasok: ${produk.idPemasok}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = Color(0xFF3C3C3C)
+                    )
                 )
                 Text(
                     text = "Merk: ${produk.idMerk}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = Color(0xFF3C3C3C)
+                    )
                 )
             }
         }

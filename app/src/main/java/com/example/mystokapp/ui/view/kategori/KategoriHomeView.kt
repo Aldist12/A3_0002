@@ -33,6 +33,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,18 +67,19 @@ fun HomeKategoriScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color.Gray), // Header abu-abu
                 title = {
                     Column {
                         Text(
                             text = "Kelola Kategori Anda",
-                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                            color = Color.Gray
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.White
                         )
                         Text(
                             text = "Pengelolaan Kategori",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            color = Color.White
                         )
                     }
                 },
@@ -85,11 +88,10 @@ fun HomeKategoriScreen(
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = "Refresh",
-                            tint = Color(0xFF6C5CE7)
+                            tint = Color.White
                         )
                     }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFFF0F0F0))
+                }
             )
         },
         floatingActionButton = {
@@ -98,7 +100,7 @@ fun HomeKategoriScreen(
                 shape = RoundedCornerShape(16.dp),
                 containerColor = Color(0xFF6C5CE7),
                 contentColor = Color.White,
-                elevation = FloatingActionButtonDefaults.elevation(8.dp)
+                modifier = Modifier.shadow(10.dp, RoundedCornerShape(16.dp))
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp),
@@ -106,20 +108,15 @@ fun HomeKategoriScreen(
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Add Category")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Tambah Kategori")
+                    Text("Tambah Kategori", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         },
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = Color.Gray) { // Navigasi bawah abu-abu
                 NavigationBarItem(
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.ShoppingCart,
-                            contentDescription = "Product"
-                        )
-                    },
-                    label = { Text("Produk") },
+                    icon = { Icon(Icons.Default.ShoppingCart, "Produk") },
+                    label = { Text("Produk", color = Color.White) },
                     selected = selectedTab == 0,
                     onClick = {
                         selectedTab = 0
@@ -127,26 +124,14 @@ fun HomeKategoriScreen(
                     }
                 )
                 NavigationBarItem(
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.Favorite,
-                            contentDescription = "Categories"
-                        )
-                    },
-                    label = { Text("Kategori") },
+                    icon = { Icon(Icons.Default.Favorite, "Kategori") },
+                    label = { Text("Kategori", color = Color.White) },
                     selected = selectedTab == 1,
-                    onClick = {
-                        selectedTab = 1
-                    }
+                    onClick = { selectedTab = 1 }
                 )
                 NavigationBarItem(
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.ExitToApp,
-                            contentDescription = "Suppliers"
-                        )
-                    },
-                    label = { Text("Pemasok") },
+                    icon = { Icon(Icons.Default.ExitToApp, "Pemasok") },
+                    label = { Text("Pemasok", color = Color.White) },
                     selected = selectedTab == 2,
                     onClick = {
                         selectedTab = 2
@@ -154,13 +139,8 @@ fun HomeKategoriScreen(
                     }
                 )
                 NavigationBarItem(
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Brands"
-                        )
-                    },
-                    label = { Text("Merk") },
+                    icon = { Icon(Icons.Default.Star, "Merk") },
+                    label = { Text("Merk", color = Color.White) },
                     selected = selectedTab == 3,
                     onClick = {
                         selectedTab = 3
@@ -169,18 +149,30 @@ fun HomeKategoriScreen(
                 )
             }
         },
-        containerColor = Color(0xFFF5F6FF)
+        containerColor = Color.Transparent // Membuat Scaffold transparan agar gradient terlihat
     ) { innerPadding ->
-        HomeStatus(
-            homeUiState = viewModel.kategoriUiState,
-            retryAction = { viewModel.getKategori() },
-            onDeleteClick = { kategori ->
-                viewModel.deleteKategori(kategori.idKategori)
-                viewModel.getKategori()
-            },
-            onDetailClick = { kategori -> onDetailClick(kategori.idKategori) },
-            modifier = Modifier.padding(innerPadding)
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color(0xFF6C5CE7), Color(0xFFF0F4FF)) // Gradient warna biru ke ungu
+                    )
+                )
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center
+        ) {
+            HomeStatus(
+                homeUiState = viewModel.kategoriUiState,
+                retryAction = { viewModel.getKategori() },
+                onDeleteClick = { kategori ->
+                    viewModel.deleteKategori(kategori.idKategori)
+                    viewModel.getKategori()
+                },
+                onDetailClick = { kategori -> onDetailClick(kategori.idKategori) },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
 

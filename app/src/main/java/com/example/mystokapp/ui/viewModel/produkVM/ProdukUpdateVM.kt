@@ -23,7 +23,9 @@ data class UpdateUiEvent(
 sealed class UpdateUiState {
     object Idle : UpdateUiState()
     object Loading : UpdateUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val produk: Produk) : UpdateUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val produk: Produk) :
+        UpdateUiState()
+
     data class Error(val message: String) : UpdateUiState()
 }
 

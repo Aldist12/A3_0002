@@ -1,10 +1,12 @@
 package com.example.mystokapp.ui.view.kategori
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.ui.customWidget.CostumeTopAppBar
@@ -14,7 +16,6 @@ import com.example.mystokapp.ui.viewModel.kategoriVM.KategoriUpdateVM
 import com.example.mystokapp.ui.viewModel.kategoriVM.UpdateKategoriEvent
 import com.example.mystokapp.ui.viewModel.kategoriVM.UpdateKategoriUiState
 import kotlinx.serialization.InternalSerializationApi
-
 
 object DestinasiUpdateKategori : DestinasiNavigasi {
     override val route = "update kategori"
@@ -49,6 +50,7 @@ fun UpdateScreenKategori(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.LightGray) // **Menggunakan warna abu-abu terang agar konsisten**
                 .padding(innerPadding)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -71,7 +73,10 @@ fun UpdateScreenKategori(
                 }
 
                 is UpdateKategoriUiState.Error -> {
-                    Text("Error: ${(uiState as UpdateKategoriUiState.Error).message}")
+                    Text(
+                        text = "Error: ${(uiState as UpdateKategoriUiState.Error).message}",
+                        color = Color.Red // **Menampilkan error dalam warna merah**
+                    )
                 }
 
                 else -> {}
@@ -99,17 +104,19 @@ fun UpdateFormKategori(
         OutlinedTextField(
             value = namaKategoriState,
             onValueChange = { namaKategoriState = it },
-            label = { Text("Nama Kategori") },
+            label = { Text("Nama Kategori", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar mudah dibaca**
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text("Masukkan Nama Kategori", color = Color.Gray) }
         )
 
         OutlinedTextField(
             value = deskripsiKategoriState,
             onValueChange = { deskripsiKategoriState = it },
-            label = { Text("Deskripsi Kategori") },
+            label = { Text("Deskripsi Kategori", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar lebih jelas**
             modifier = Modifier.fillMaxWidth(),
-            singleLine = false
+            singleLine = false,
+            placeholder = { Text("Masukkan Deskripsi Kategori", color = Color.Gray) }
         )
 
         Button(
@@ -122,9 +129,13 @@ fun UpdateFormKategori(
                     )
                 )
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF6C5CE7), // **Tombol tetap ungu**
+                contentColor = Color.White
+            )
         ) {
-            Text("Update")
+            Text("Update", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold))
         }
     }
 }

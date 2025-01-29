@@ -1,8 +1,6 @@
 package com.example.mystokapp.ui.view.produk
 
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,14 +20,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -42,7 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -50,9 +45,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.model.Produk
 import com.example.mystokapp.ui.navigation.DestinasiNavigasi
@@ -86,28 +79,102 @@ fun HomeScreen(
         topBar = {
             Column {
                 TopAppBar(
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color.Gray), // Header abu-abu
                     title = {
                         Column {
                             Text(
-                                text = "Halo, Selamat Datang 👋",
+                                text = "Hai, Selamat Datang \uD83E\uDEF4 ",
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = Color.Gray
+                                color = Color.White
                             )
                             Text(
                                 text = "Beranda",
                                 style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
                             )
                         }
                     },
                     actions = {
                         IconButton(onClick = { viewModel.getProduk() }) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+                            Icon(Icons.Default.Refresh, contentDescription = "Refresh", tint = Color.White)
                         }
                     }
                 )
-
-                // Search Bar
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = RoundedCornerShape(16.dp),
+                containerColor = Color(0xFF6C5CE7),
+                contentColor = Color.White,
+                modifier = Modifier.shadow(10.dp, RoundedCornerShape(16.dp))
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add Produk")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Tambah Produk")
+                }
+            }
+        },
+        bottomBar = {
+            NavigationBar(containerColor = Color.Gray) { // Navigasi bawah abu-abu
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ShoppingCart, "Produk") },
+                    label = { Text("Produk", color = Color.White) },
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Favorite, "Kategori") },
+                    label = { Text("Kategori", color = Color.White) },
+                    selected = selectedTab == 1,
+                    onClick = {
+                        selectedTab = 1
+                        navigateToKategori()
+                    }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ExitToApp, "Pemasok") },
+                    label = { Text("Pemasok", color = Color.White) },
+                    selected = selectedTab == 2,
+                    onClick = {
+                        selectedTab = 2
+                        navigateToPemasok()
+                    }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Star, "Merk") },
+                    label = { Text("Merk", color = Color.White) },
+                    selected = selectedTab == 3,
+                    onClick = {
+                        selectedTab = 3
+                        navigateToMerk()
+                    }
+                )
+            }
+        },
+        containerColor = Color.Transparent // Membuat Scaffold transparan agar gradient terlihat
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color(0xFF6C5CE7), Color(0xFFF0F4FF)) // Gradient warna biru ke ungu
+                    )
+                )
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                // Search Bar (Tidak diubah, tetap ada)
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -131,104 +198,33 @@ fun HomeScreen(
                         TextField(
                             value = searchQuery,
                             onValueChange = { searchQuery = it },
-                            placeholder = { Text("Cari produk...") },
+                            placeholder = { Text("Temukan produk...") },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.colors(
                                 focusedContainerColor = Color.Transparent,
                                 unfocusedContainerColor = Color.Transparent,
                                 disabledContainerColor = Color.Transparent,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
+                                focusedIndicatorColor = Color.Gray,
+                                unfocusedIndicatorColor = Color.LightGray,
                             ),
                             singleLine = true
                         )
                     }
                 }
 
-                // Statistics Box
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFF6C5CE7)
-                    )
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.banner), // Replace with your drawable resource
-                        contentDescription = null,
-                    )
-                }
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = navigateToItemEntry,
-                shape = RoundedCornerShape(16.dp),
-                containerColor = Color(0xFF6C5CE7),
-                contentColor = Color.White
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "Add Produk")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Tambah Produk")
-                }
-            }
-        },
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.ShoppingCart, "Produk") },
-                    label = { Text("Produk") },
-                    selected = selectedTab == 0,
-                    onClick = { selectedTab = 0 }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, "Kategori") },
-                    label = { Text("Kategori") },
-                    selected = selectedTab == 1,
-                    onClick = {
-                        selectedTab = 1
-                        navigateToKategori()
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.ExitToApp, "Pemasok") },
-                    label = { Text("Pemasok") },
-                    selected = selectedTab == 2,
-                    onClick = {
-                        selectedTab = 2
-                        navigateToPemasok()
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Star, "Merk") },
-                    label = { Text("Merk") },
-                    selected = selectedTab == 3,
-                    onClick = {
-                        selectedTab = 3
-                        navigateToMerk()
+                // Tampilan HomeStatus (tetap sama, tidak diubah)
+                HomeStatus(
+                    homeUiState = viewModel.produkUiState,
+                    retryAction = { viewModel.getProduk() },
+                    modifier = Modifier.fillMaxSize(),
+                    onDetailClick = onDetailClick,
+                    onDeleteClick = { produk ->
+                        viewModel.deleteProduk(produk.idProduk)
+                        viewModel.getProduk()
                     }
                 )
             }
-        },
-        containerColor = Color(0xFFF5F6FF)
-    ) { innerPadding ->
-        HomeStatus(
-            homeUiState = viewModel.produkUiState,
-            retryAction = { viewModel.getProduk() },
-            modifier = Modifier.padding(innerPadding),
-            onDetailClick = onDetailClick,
-            onDeleteClick = { produk ->
-                viewModel.deleteProduk(produk.idProduk)
-                viewModel.getProduk()
-            }
-        )
+        }
     }
 }
 
@@ -301,11 +297,19 @@ fun HomeStatus(
                     modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Tidak ada data produk",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color.Gray
-                    )
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Image(
+                            painter = painterResource(id = R.drawable.nodata), // Tambahkan gambar ilustrasi
+                            contentDescription = "No Data",
+                            modifier = Modifier.size(200.dp)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Tidak ada data produk.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = Color.White
+                        )
+                    }
                 }
             } else {
                 ProdukLayout(
@@ -316,6 +320,7 @@ fun HomeStatus(
                 )
             }
         }
+
         is HomeUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
     }
 }

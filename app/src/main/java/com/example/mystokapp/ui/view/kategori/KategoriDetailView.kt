@@ -1,5 +1,6 @@
 package com.example.mystokapp.ui.view.kategori
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.model.Kategori
@@ -64,12 +67,14 @@ fun DetailKategoriScreen(
             FloatingActionButton(
                 onClick = { onEditClick(idKategori) },
                 shape = MaterialTheme.shapes.medium,
+                containerColor = Color(0xFF6C5CE7), // Warna tombol tetap ungu
+                contentColor = Color.White,
                 modifier = Modifier.padding(18.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit Kategori",
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = Color.White
                 )
             }
         },
@@ -80,6 +85,7 @@ fun DetailKategoriScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
+                        .background(Color.LightGray) // **Menggunakan warna putih polos**
                         .padding(innerPadding)
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -89,9 +95,7 @@ fun DetailKategoriScreen(
             }
 
             is DetailKategoriUiState.Error -> OnError(retryAction = {
-                viewModel.getKategoriById(
-                    idKategori
-                )
+                viewModel.getKategoriById(idKategori)
             })
         }
     }
@@ -108,6 +112,9 @@ fun DetailKategoriCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFD0C4FC) // Warna card tetap ungu muda
+        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
         )
@@ -118,18 +125,21 @@ fun DetailKategoriCard(
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Header section with kategori name
+            // Header kategori
             Text(
                 text = kategori.namaKategori,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    color = MaterialTheme.colorScheme.primary
+                    color = Color(0xFF2C2C2C), // Warna teks lebih gelap agar kontras lebih baik
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
             )
 
-            // Description section
+            // Deskripsi kategori
             Text(
                 text = kategori.deskripsiKategori,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF3C3C3C) // Warna teks lebih gelap agar lebih mudah dibaca
+                )
             )
 
             // Divider
@@ -137,13 +147,15 @@ fun DetailKategoriCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                color = MaterialTheme.colorScheme.outlineVariant
+                color = Color.Gray
             )
 
-            // Kategori details
+            // Detail ID Kategori
             Text(
                 text = "ID Kategori: ${kategori.idKategori}",
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF3C3C3C) // Warna teks lebih gelap agar lebih jelas
+                )
             )
         }
     }

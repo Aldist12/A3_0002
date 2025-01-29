@@ -1,11 +1,12 @@
 package com.example.mystokapp.ui.view.merk
 
-
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.ui.customWidget.CostumeTopAppBar
@@ -15,7 +16,6 @@ import com.example.mystokapp.ui.viewModel.merkVM.MerkUpdateVM
 import com.example.mystokapp.ui.viewModel.merkVM.UpdateMerkEvent
 import com.example.mystokapp.ui.viewModel.merkVM.UpdateMerkUiState
 import kotlinx.serialization.InternalSerializationApi
-
 
 object DestinasiUpdateMerk : DestinasiNavigasi {
     override val route = "update merk"
@@ -50,16 +50,17 @@ fun UpdateScreenMerk(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.LightGray) // **Menggunakan warna abu-abu terang agar konsisten**
                 .padding(innerPadding)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            when (uiState) {
-                is UpdateMerkUiState.Loading -> CircularProgressIndicator()
-                is UpdateMerkUiState.Success -> {
+            when {
+                uiState is UpdateMerkUiState.Loading -> CircularProgressIndicator()
+                uiState is UpdateMerkUiState.Success -> {
                     val merk = (uiState as UpdateMerkUiState.Success).merk
-                    com.example.mystokapp.ui.view.merk.UpdateFormMerk(
+                    UpdateFormMerk(
                         idMerk = merk.idMerk,
                         namaMerk = merk.namaMerk,
                         deskripsiMerk = merk.deskripsiMerk,
@@ -70,12 +71,13 @@ fun UpdateScreenMerk(
                         }
                     )
                 }
-
-                is UpdateMerkUiState.Error -> {
-                    Text("Error: ${(uiState as UpdateMerkUiState.Error).message}")
+                uiState is UpdateMerkUiState.Error -> {
+                    Text(
+                        text = "Error: ${(uiState as UpdateMerkUiState.Error).message}",
+                        color = Color.Red, // **Menampilkan error dalam warna merah**
+                        modifier = Modifier.padding(16.dp)
+                    )
                 }
-
-                else -> {}
             }
         }
     }
@@ -100,17 +102,19 @@ fun UpdateFormMerk(
         OutlinedTextField(
             value = namaMerkState,
             onValueChange = { namaMerkState = it },
-            label = { Text("Nama Merk") },
+            label = { Text("Nama Merk", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar mudah dibaca**
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text("Masukkan Nama Merk", color = Color.Gray) }
         )
 
         OutlinedTextField(
             value = deskripsiMerkState,
             onValueChange = { deskripsiMerkState = it },
-            label = { Text("Deskripsi Merk") },
+            label = { Text("Deskripsi Merk", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar lebih jelas**
             modifier = Modifier.fillMaxWidth(),
-            singleLine = false
+            singleLine = false,
+            placeholder = { Text("Masukkan Deskripsi Merk", color = Color.Gray) }
         )
 
         Button(
@@ -123,9 +127,13 @@ fun UpdateFormMerk(
                     )
                 )
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF6C5CE7), // **Tombol tetap ungu**
+                contentColor = Color.White
+            )
         ) {
-            Text("Update")
+            Text("Update", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold))
         }
     }
 }

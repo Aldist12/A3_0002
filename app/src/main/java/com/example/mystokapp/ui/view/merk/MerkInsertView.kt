@@ -1,22 +1,11 @@
 package com.example.mystokapp.ui.view.merk
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.ui.customWidget.CostumeTopAppBar
@@ -55,6 +44,7 @@ fun EntryMerkScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.LightGray) // **Menggunakan warna abu-abu terang agar konsisten**
                 .padding(innerPadding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -73,9 +63,13 @@ fun EntryMerkScreen(
                         navigateBack()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF6C5CE7), // **Tombol tetap ungu**
+                    contentColor = Color.White
+                )
             ) {
-                Text("Simpan")
+                Text("Simpan", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold))
             }
         }
     }
@@ -93,24 +87,23 @@ fun FormInput(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
         OutlinedTextField(
             value = insertUiEvent.namaMerk,
             onValueChange = { onValueChange(insertUiEvent.copy(namaMerk = it)) },
-            label = { Text("Nama Merk") },
+            label = { Text("Nama Merk", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar mudah dibaca**
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
-            placeholder = { Text("Masukkan Nama Merk") },
+            placeholder = { Text("Masukkan Nama Merk", color = Color.Gray) },
             singleLine = true
         )
 
         OutlinedTextField(
             value = insertUiEvent.deskripsiMerk,
             onValueChange = { onValueChange(insertUiEvent.copy(deskripsiMerk = it)) },
-            label = { Text("Deskripsi Merk") },
+            label = { Text("Deskripsi Merk", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar lebih jelas**
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
-            placeholder = { Text("Masukkan Deskripsi Merk") },
+            placeholder = { Text("Masukkan Deskripsi Merk", color = Color.Gray) },
             singleLine = true
         )
     }

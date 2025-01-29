@@ -1,6 +1,7 @@
 package com.example.mystokapp.ui.view
 
 
+import android.R.color.white
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -57,7 +58,7 @@ fun SplashScreen(
 
     Surface(
         modifier = modifier.fillMaxSize(),
-        color = Color(0xFFF5F6FF)
+        color = Color(0xFF6C5CE7)// Warna latar belakang biru muda yang serasi dengan tema
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -83,7 +84,7 @@ fun SplashScreen(
                 Text(
                     text = "My Stokk App",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF6C5CE7), // Teks ungu
+                    color = Color.White, // Teks ungu
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
@@ -93,10 +94,12 @@ fun SplashScreen(
                 Text(
                     text = "Kelola Stok Barang Anda",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFF6C5CE7).copy(alpha = 0.7f), // Teks ungu dengan transparansi
+                    color = Color.White.copy(alpha = 0.7f), // Teks ungu dengan transparansi
                     textAlign = TextAlign.Center
                 )
             }
         }
     }
 }
+
+

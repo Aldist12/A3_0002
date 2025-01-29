@@ -14,7 +14,9 @@ import kotlinx.serialization.InternalSerializationApi
 import okio.IOException
 
 sealed class HomeUiState {
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val produk: List<Produk>) : HomeUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val produk: List<Produk>) :
+        HomeUiState()
+
     object Error : HomeUiState()
     object Loading : HomeUiState()
 }

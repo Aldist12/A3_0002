@@ -1,5 +1,6 @@
 package com.example.mystokapp.ui.view.pemasok
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.model.Pemasok
@@ -36,7 +38,6 @@ object DestinasiPemasokDetail : DestinasiNavigasi {
     override val route = "detail pemasok"
     override val titleRes = "Detail Pemasok"
 }
-
 @OptIn(ExperimentalMaterial3Api::class, InternalSerializationApi::class)
 @Composable
 fun DetailPemasokScreen(
@@ -47,7 +48,6 @@ fun DetailPemasokScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState = viewModel.uiState.collectAsState()
-
 
     LaunchedEffect(idPemasok) {
         viewModel.getPemasokById(idPemasok)
@@ -66,12 +66,14 @@ fun DetailPemasokScreen(
             FloatingActionButton(
                 onClick = { onEditClick(idPemasok) },
                 shape = MaterialTheme.shapes.medium,
+                containerColor = Color(0xFF6C5CE7), // **Tombol tetap ungu**
+                contentColor = Color.White,
                 modifier = Modifier.padding(18.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit Pemasok",
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = Color.White
                 )
             }
         },
@@ -82,6 +84,7 @@ fun DetailPemasokScreen(
                 Column(
                     modifier = modifier
                         .fillMaxSize()
+                        .background(Color.LightGray) // **Menggunakan warna abu-abu terang agar konsisten**
                         .padding(innerPadding)
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -90,11 +93,13 @@ fun DetailPemasokScreen(
                 }
             }
 
-            is DetailPemasokUiState.Error -> OnError(retryAction = {
-                viewModel.getPemasokById(
-                    idPemasok
+            is DetailPemasokUiState.Error -> {
+                Text(
+                    text = "Error: ${(state as DetailPemasokUiState.Error)}",
+                    color = Color.Red, // **Menampilkan error dalam warna merah**
+                    modifier = Modifier.padding(16.dp)
                 )
-            })
+            }
         }
     }
 }
@@ -110,6 +115,9 @@ fun DetailPemasokCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFD0C4FC) // **Warna card tetap ungu muda**
+        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
         )
@@ -124,7 +132,8 @@ fun DetailPemasokCard(
             Text(
                 text = pemasok.namaPemasok,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    color = MaterialTheme.colorScheme.primary
+                    color = Color(0xFF2C2C2C), // **Warna lebih gelap agar mudah dibaca**
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
             )
 
@@ -136,7 +145,9 @@ fun DetailPemasokCard(
             ) {
                 Text(
                     text = pemasok.alamatPemasok,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = Color(0xFF3C3C3C) // **Teks lebih gelap untuk keterbacaan lebih baik**
+                    )
                 )
             }
 
@@ -145,7 +156,7 @@ fun DetailPemasokCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                color = MaterialTheme.colorScheme.outlineVariant
+                color = Color.Gray
             )
 
             // Supplier details
@@ -154,17 +165,21 @@ fun DetailPemasokCard(
             ) {
                 Text(
                     text = "Telepon: ${pemasok.teleponPemasok}",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = Color(0xFF3C3C3C) // **Teks lebih gelap untuk keterbacaan lebih baik**
+                    )
                 )
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    color = MaterialTheme.colorScheme.outlineVariant
+                    color = Color.Gray
                 )
                 Text(
                     text = "ID Pemasok: ${pemasok.idPemasok}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = Color(0xFF3C3C3C) // **Teks lebih gelap untuk konsistensi**
+                    )
                 )
             }
         }

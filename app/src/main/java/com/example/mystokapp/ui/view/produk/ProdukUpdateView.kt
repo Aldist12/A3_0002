@@ -1,11 +1,12 @@
 package com.example.mystokapp.ui.view.produk
 
-
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mystokapp.model.MenuOptions
@@ -31,7 +32,6 @@ fun UpdateScreenProduk(
     modifier: Modifier = Modifier,
     viewModel: UpdateProdukVM = viewModel(factory = PenyediaViewModel.Factory)
 ) {
-
     val uiState by viewModel.uiState.collectAsState()
 
     // Load data once when the screen opens
@@ -52,14 +52,15 @@ fun UpdateScreenProduk(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.LightGray) // **Menggunakan warna abu-abu terang agar konsisten**
                 .padding(innerPadding)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            when (uiState) {
-                is UpdateUiState.Loading -> CircularProgressIndicator()
-                is UpdateUiState.Success -> {
+            when {
+                uiState is UpdateUiState.Loading -> CircularProgressIndicator()
+                uiState is UpdateUiState.Success -> {
                     val produk = (uiState as UpdateUiState.Success).produk
                     UpdateForm(
                         idProduk = produk.idProduk,
@@ -77,10 +78,13 @@ fun UpdateScreenProduk(
                         }
                     )
                 }
-                is UpdateUiState.Error -> {
-                    Text("Error: ${(uiState as UpdateUiState.Error).message}")
+                uiState is UpdateUiState.Error -> {
+                    Text(
+                        text = "Error: ${(uiState as UpdateUiState.Error).message}",
+                        color = Color.Red, // **Menampilkan error dalam warna merah**
+                        modifier = Modifier.padding(16.dp)
+                    )
                 }
-                else -> {}
             }
         }
     }
@@ -115,33 +119,37 @@ fun UpdateForm(
         OutlinedTextField(
             value = namaProdukState,
             onValueChange = { namaProdukState = it },
-            label = { Text("Nama Produk") },
+            label = { Text("Nama Produk", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar mudah dibaca**
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text("Masukkan Nama Produk", color = Color.Gray) }
         )
 
         OutlinedTextField(
             value = deskripsiProdukState,
             onValueChange = { deskripsiProdukState = it },
-            label = { Text("Deskripsi Produk") },
+            label = { Text("Deskripsi Produk", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar lebih jelas**
             modifier = Modifier.fillMaxWidth(),
-            singleLine = false
+            singleLine = false,
+            placeholder = { Text("Masukkan Deskripsi Produk", color = Color.Gray) }
         )
 
         OutlinedTextField(
             value = hargaState,
             onValueChange = { hargaState = it },
-            label = { Text("Harga") },
+            label = { Text("Harga", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar lebih jelas**
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            placeholder = { Text("Masukkan Harga", color = Color.Gray) }
         )
 
         OutlinedTextField(
             value = stokState,
             onValueChange = { stokState = it },
-            label = { Text("Stok") },
+            label = { Text("Stok", color = Color(0xFF2C2C2C)) }, // **Teks lebih gelap agar lebih jelas**
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            placeholder = { Text("Masukkan Stok", color = Color.Gray) }
         )
 
         DynamicSelectedTextField(
@@ -186,9 +194,13 @@ fun UpdateForm(
                     )
                 )
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF6C5CE7), // **Tombol tetap ungu**
+                contentColor = Color.White
+            )
         ) {
-            Text("Update")
+            Text("Update", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold))
         }
     }
 }
