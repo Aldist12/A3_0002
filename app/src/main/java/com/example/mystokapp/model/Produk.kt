@@ -4,7 +4,8 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@InternalSerializationApi @Serializable
+@InternalSerializationApi
+@Serializable
 data class Produk(
     @SerialName("id_produk")
     val idProduk: Int = 0,
