@@ -1,5 +1,7 @@
 Produk Home View
 ![Screenshot 2025-01-29 112046](https://github.com/user-attachments/assets/242f6a76-8735-476e-bbb4-455da97866f1)
+Produk Insert View
+![Screenshot 2025-01-29 123336](https://github.com/user-attachments/assets/1552cad4-5099-45f2-8621-54adc63ace46)
 
 
 
@@ -16,7 +18,20 @@ Kategori Update View
 
 Pemasok Home View
 ![Screenshot 2025-01-29 112241](https://github.com/user-attachments/assets/e733691a-e76c-4f89-a4a3-756d17a4192a)
+Pemasok Insert View
+![Screenshot 2025-01-29 122428](https://github.com/user-attachments/assets/2ff32077-f106-420d-9950-43d05bf73057)
+Pemasok Detail View
+![Screenshot 2025-01-29 122137](https://github.com/user-attachments/assets/80202449-c905-498e-8681-3f014f231dcd)
+Pemasok Update View
+![Screenshot 2025-01-29 122503](https://github.com/user-attachments/assets/b71546a8-5810-42ea-94db-5dff9933d001)
 
 
 Merk Home View
 ![Screenshot 2025-01-29 112319](https://github.com/user-attachments/assets/7bdad74e-5b34-4aa5-af10-5d3f96161bb2)
+Merk Insert View
+![Screenshot 2025-01-29 121236](https://github.com/user-attachments/assets/f6573ccb-6c57-4a0f-847d-b5ffd41eb459)
+Merk Detail View
+![Screenshot 2025-01-29 120232](https://github.com/user-attachments/assets/3e7cd19d-995e-4853-a208-e6e361016fa3)
+Merk Update View
+![Screenshot 2025-01-29 121254](https://github.com/user-attachments/assets/ad189408-ad45-4402-a97b-e8051322aed8)
+
