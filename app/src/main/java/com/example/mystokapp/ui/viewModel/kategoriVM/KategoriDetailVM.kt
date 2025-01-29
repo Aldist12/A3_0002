@@ -13,7 +13,9 @@ import kotlinx.serialization.InternalSerializationApi
 
 sealed class DetailKategoriUiState {
     object Loading : DetailKategoriUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val kategori: Kategori) : DetailKategoriUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val kategori: Kategori) :
+        DetailKategoriUiState()
+
     object Error : DetailKategoriUiState()
 }
 

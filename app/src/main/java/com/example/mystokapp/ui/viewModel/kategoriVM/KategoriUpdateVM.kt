@@ -18,7 +18,9 @@ data class UpdateKategoriEvent(
 sealed class UpdateKategoriUiState {
     object Idle : UpdateKategoriUiState()
     object Loading : UpdateKategoriUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val kategori: Kategori) : UpdateKategoriUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val kategori: Kategori) :
+        UpdateKategoriUiState()
+
     data class Error(val message: String) : UpdateKategoriUiState()
 }
 
@@ -44,7 +46,8 @@ class KategoriUpdateVM(
                 )
                 _uiState.value = UpdateKategoriUiState.Success(kategori)
             } catch (e: Exception) {
-                _uiState.value = UpdateKategoriUiState.Error("Failed to load category data: ${e.message}")
+                _uiState.value =
+                    UpdateKategoriUiState.Error("Failed to load category data: ${e.message}")
             }
         }
     }
@@ -72,7 +75,8 @@ class KategoriUpdateVM(
                 kategoriRepository.updateKategori(formData.idKategori, kategori)
                 _uiState.value = UpdateKategoriUiState.Success(kategori)
             } catch (e: Exception) {
-                _uiState.value = UpdateKategoriUiState.Error("Failed to update category: ${e.message}")
+                _uiState.value =
+                    UpdateKategoriUiState.Error("Failed to update category: ${e.message}")
             }
         }
     }

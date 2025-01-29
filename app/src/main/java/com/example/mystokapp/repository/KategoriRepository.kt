@@ -25,7 +25,7 @@ class NetworkKategoriRepository(
     private val kategoriApiService: KategoriService
 ) : KategoriRepository {
     @OptIn(InternalSerializationApi::class)
-    override suspend fun insertKategori(kategori:Kategori) {
+    override suspend fun insertKategori(kategori: Kategori) {
         kategoriApiService.insertKategori(kategori)
     }
 
@@ -39,8 +39,7 @@ class NetworkKategoriRepository(
             val response = kategoriApiService.deleteKategori(idKategori)
             if (!response.isSuccessful) {
                 throw IOException(
-                    "Failed to delete kategori. HTTP Status Code: " +
-                            "${response.code()}"
+                    "Failed to delete kategori. HTTP Status Code: " + "${response.code()}"
                 )
             } else {
                 response.message()
@@ -52,8 +51,7 @@ class NetworkKategoriRepository(
     }
 
     @OptIn(InternalSerializationApi::class)
-    override suspend fun getKategori(): List<Kategori> =
-        kategoriApiService.getAllKategori()
+    override suspend fun getKategori(): List<Kategori> = kategoriApiService.getAllKategori()
 
     @OptIn(InternalSerializationApi::class)
     override suspend fun getKategoriById(idKategori: Int): Kategori {

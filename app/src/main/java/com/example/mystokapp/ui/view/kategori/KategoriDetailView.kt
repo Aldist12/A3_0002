@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -18,7 +16,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -65,7 +62,7 @@ fun DetailKategoriScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {onEditClick(idKategori)},
+                onClick = { onEditClick(idKategori) },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
             ) {
@@ -90,7 +87,12 @@ fun DetailKategoriScreen(
                     DetailKategoriCard(kategori = state.kategori)
                 }
             }
-            is DetailKategoriUiState.Error -> OnError(retryAction = { viewModel.getKategoriById(idKategori) })
+
+            is DetailKategoriUiState.Error -> OnError(retryAction = {
+                viewModel.getKategoriById(
+                    idKategori
+                )
+            })
         }
     }
 }

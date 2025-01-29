@@ -20,13 +20,16 @@ fun CostumeTopAppBar(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
     onRefresh: () -> Unit = {},
-){
+) {
     CenterAlignedTopAppBar(
-        title = {Text(title)},
+        title = { Text(title) },
         actions = {
-            Icon(imageVector = Icons.Default.Refresh, contentDescription = "",modifier = Modifier.clickable {
-                onRefresh()
-            })
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = "",
+                modifier = Modifier.clickable {
+                    onRefresh()
+                })
         },
         modifier = modifier,
         navigationIcon = {

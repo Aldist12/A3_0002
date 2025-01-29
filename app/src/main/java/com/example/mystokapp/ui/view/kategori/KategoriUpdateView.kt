@@ -69,9 +69,11 @@ fun UpdateScreenKategori(
                         }
                     )
                 }
+
                 is UpdateKategoriUiState.Error -> {
                     Text("Error: ${(uiState as UpdateKategoriUiState.Error).message}")
                 }
+
                 else -> {}
             }
         }
