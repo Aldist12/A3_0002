@@ -1,4 +1,5 @@
 package com.example.mystokapp.ui.viewModel.merkVM
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,7 +13,9 @@ import kotlinx.serialization.InternalSerializationApi
 import okio.IOException
 
 sealed class HomeUiState {
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val merk: List<Merk>) : HomeUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val merk: List<Merk>) :
+        HomeUiState()
+
     object Error : HomeUiState()
     object Loading : HomeUiState()
 }

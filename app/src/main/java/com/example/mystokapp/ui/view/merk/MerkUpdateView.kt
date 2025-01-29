@@ -2,7 +2,6 @@ package com.example.mystokapp.ui.view.merk
 
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -71,9 +70,11 @@ fun UpdateScreenMerk(
                         }
                     )
                 }
+
                 is UpdateMerkUiState.Error -> {
                     Text("Error: ${(uiState as UpdateMerkUiState.Error).message}")
                 }
+
                 else -> {}
             }
         }

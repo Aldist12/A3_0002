@@ -18,7 +18,9 @@ data class UpdateMerkEvent(
 sealed class UpdateMerkUiState {
     object Idle : UpdateMerkUiState()
     object Loading : UpdateMerkUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val merk: Merk) : UpdateMerkUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val merk: Merk) :
+        UpdateMerkUiState()
+
     data class Error(val message: String) : UpdateMerkUiState()
 }
 

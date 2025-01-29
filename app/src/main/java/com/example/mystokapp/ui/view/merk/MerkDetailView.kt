@@ -3,17 +3,11 @@ package com.example.mystokapp.ui.view.merk
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -23,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -70,7 +63,7 @@ fun DetailMerkScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {onEditClick(idMerk)},
+                onClick = { onEditClick(idMerk) },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
             ) {
@@ -95,6 +88,7 @@ fun DetailMerkScreen(
                     DetailMerkCard(merk = state.merk)
                 }
             }
+
             is DetailMerkUiState.Error -> OnError(retryAction = { viewModel.getMerkById(idMerk) })
         }
     }
@@ -103,8 +97,7 @@ fun DetailMerkScreen(
 @OptIn(InternalSerializationApi::class)
 @Composable
 fun DetailMerkCard(
-    merk: Merk,
-    modifier: Modifier = Modifier
+    merk: Merk, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
@@ -123,16 +116,14 @@ fun DetailMerkCard(
         ) {
             // Header section with merk name
             Text(
-                text = merk.namaMerk,
-                style = MaterialTheme.typography.headlineMedium.copy(
+                text = merk.namaMerk, style = MaterialTheme.typography.headlineMedium.copy(
                     color = MaterialTheme.colorScheme.primary
                 )
             )
 
             // Description section
             Text(
-                text = merk.deskripsiMerk,
-                style = MaterialTheme.typography.bodyLarge
+                text = merk.deskripsiMerk, style = MaterialTheme.typography.bodyLarge
             )
 
             // Divider
@@ -145,8 +136,7 @@ fun DetailMerkCard(
 
             // Merk details
             Text(
-                text = "ID Merk: ${merk.idMerk}",
-                style = MaterialTheme.typography.bodyLarge
+                text = "ID Merk: ${merk.idMerk}", style = MaterialTheme.typography.bodyLarge
             )
         }
     }

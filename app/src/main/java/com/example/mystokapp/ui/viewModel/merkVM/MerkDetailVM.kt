@@ -12,7 +12,9 @@ import kotlinx.serialization.InternalSerializationApi
 
 sealed class DetailMerkUiState {
     object Loading : DetailMerkUiState()
-    data class Success @OptIn(InternalSerializationApi::class) constructor(val merk: Merk) : DetailMerkUiState()
+    data class Success @OptIn(InternalSerializationApi::class) constructor(val merk: Merk) :
+        DetailMerkUiState()
+
     object Error : DetailMerkUiState()
 }
 
